@@ -47,6 +47,7 @@ terraform plan
 terraform apply
 terraform show
 terraform state list
+terraform output
 ```
 
 ## Configuration
