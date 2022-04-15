@@ -15,6 +15,7 @@ Repository contains set of prepared code to deploy free Kubernetes cluster in Or
 In order to setup infrastructure in OCI using Terraform, there were used:
 * [Oracle documentation](https://docs.oracle.com/en-us/iaas/developer-tutorials/tutorials/tf-simple-infrastructure/01-summary.htm)
 * [Terraform documentation](https://learn.hashicorp.com/collections/terraform/oci-get-started)
+* [OCI provider](https://registry.terraform.io/providers/oracle/oci/latest)
 
 After installing ``Terraform CLI`` and ``OCI CLI``, the first step was to authenticate in Oracle Cloud:
 
@@ -45,6 +46,7 @@ terraform fmt
 terraform validate
 terraform plan
 terraform apply
+terraform apply -auto-approve
 terraform show
 terraform state list
 terraform output
