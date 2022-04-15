@@ -9,7 +9,7 @@ terraform {
 provider "oci" {
   region              = var.region
   auth                = "SecurityToken"
-  config_file_profile = "k8s-oci"
+  config_file_profile = var.profile_name
 }
 
 data "oci_identity_availability_domains" "ads" {

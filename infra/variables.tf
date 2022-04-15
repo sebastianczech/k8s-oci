@@ -3,6 +3,12 @@ variable "compartment_id" {
   type        = string
 }
 
+variable "profile_name" {
+  description = "OCI profile name"
+  type        = string
+  default     = "k8s-oci"
+}
+
 variable "region" {
   description = "region where you have OCI tenancy"
   type        = string
