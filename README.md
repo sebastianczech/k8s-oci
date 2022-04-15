@@ -50,6 +50,7 @@ terraform apply -auto-approve
 terraform show
 terraform state list
 terraform output
+terraform destroy
 ```
 
 Error while creating instance:

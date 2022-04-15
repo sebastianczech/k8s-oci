@@ -23,11 +23,22 @@ resource "oci_core_vcn" "k8s_vcn" {
   display_name   = "K8s VCN"
 }
 
-resource "oci_core_internet_gateway" "test_internet_gateway" {
+resource "oci_core_internet_gateway" "k8s_internet_gateway" {
     compartment_id = var.compartment_id
     vcn_id = oci_core_vcn.k8s_vcn.id
     enabled = true
     display_name = "K8s Inet Gateway"
+}
+
+resource "oci_core_route_table" "k8s_vcn_route_table" {
+    compartment_id = var.compartment_id
+    vcn_id = oci_core_vcn.k8s_vcn.id
+    display_name = "K8s route table"
+    route_rules {
+        network_entity_id = oci_core_internet_gateway.k8s_internet_gateway.id
+        destination = "0.0.0.0/0"
+        destination_type = "CIDR_BLOCK"
+    }
 }
 
 resource "oci_core_subnet" "k8s_subnet" {
