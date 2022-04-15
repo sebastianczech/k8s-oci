@@ -12,7 +12,7 @@ variable "profile_name" {
 variable "region" {
   description = "region where you have OCI tenancy"
   type        = string
-  default     = "us-sanjose-1"
+  default     = "eu-frankfurt-1"
 }
 
 variable "instance_image" {
