@@ -33,6 +33,6 @@ output "subnet_cidr" {
   value       = oci_core_subnet.k8s_subnet.cidr_block
 }
 
-output "public-ip-for-compute-instance1" {
+output "public_ip_node1" {
   value = oci_core_instance.k8s_node1.public_ip
 }
