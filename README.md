@@ -91,6 +91,37 @@ After resolving issue, warning log level was set:
 export TF_LOG=WARN
 ```
 
+Access instance:
+
+```
+> ssh ubuntu@130.61.28.194
+Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.13.0-1018-oracle aarch64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri Apr 15 22:58:11 UTC 2022
+
+  System load:  0.03              Processes:               152
+  Usage of /:   3.0% of 44.97GB   Users logged in:         0
+  Memory usage: 3%                IPv4 address for enp0s3: 172.16.0.173
+  Swap usage:   0%
+
+
+0 updates can be applied immediately.
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Fri Apr 15 22:57:59 2022 from 91.226.196.92
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+ubuntu@k8s-node1:~$ 
+```
+
 ## Configuration
 
 ## CI/CD

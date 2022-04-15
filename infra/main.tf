@@ -30,10 +30,11 @@ resource "oci_core_internet_gateway" "k8s_internet_gateway" {
     display_name = "K8s Inet Gateway"
 }
 
-resource "oci_core_route_table" "k8s_vcn_route_table" {
+# https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/terraformbestpractices_topic-vcndefaults.htm
+resource "oci_core_default_route_table" "k8s_vcn_route_table" {
+    manage_default_resource_id = oci_core_vcn.k8s_vcn.default_route_table_id
     compartment_id = var.compartment_id
-    vcn_id = oci_core_vcn.k8s_vcn.id
-    display_name = "K8s route table"
+    display_name = "K8s default route table"
     route_rules {
         network_entity_id = oci_core_internet_gateway.k8s_internet_gateway.id
         destination = "0.0.0.0/0"
