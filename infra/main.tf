@@ -23,6 +23,13 @@ resource "oci_core_vcn" "k8s_vcn" {
   display_name   = "K8s VCN"
 }
 
+resource "oci_core_internet_gateway" "test_internet_gateway" {
+    compartment_id = var.compartment_id
+    vcn_id = oci_core_vcn.k8s_vcn.id
+    enabled = true
+    display_name = "K8s Inet Gateway"
+}
+
 resource "oci_core_subnet" "k8s_subnet" {
     cidr_block = var.subnet_cidr_block
     compartment_id = var.compartment_id
