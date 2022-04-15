@@ -15,6 +15,18 @@ variable "region" {
   default     = "eu-frankfurt-1"
 }
 
+variable "vcn_cidr_block" {
+  description = "vcn CIDR"
+  type        = string
+  default     = "172.16.0.0/20"
+}
+
+variable "subnet_cidr_block" {
+  description = "subnet CIDR"
+  type        = string
+  default     = "172.16.0.0/24"
+}
+
 variable "instance_image" {
   description = "name and version of image for instance"
   type        = string
