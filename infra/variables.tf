@@ -27,16 +27,17 @@ variable "subnet_cidr_block" {
   default     = "172.16.0.0/24"
 }
 
+# https://docs.oracle.com/en-us/iaas/images/ubuntu-2004/
 variable "instance_image" {
   description = "name and version of image for instance"
   type        = string
-  default     = "Canonical-Ubuntu-20.04-2022.03.02-0"
+  default     = "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaafofmp3otdb5fh3ged2zhsepoh3e2dkaus636uee4vpt7jrgqssma"
 }
 
 variable "instance_shape" {
   description = "shape of instance"
   type        = string
-  default     = "VM.Standard.E2.1.Micro"
+  default     = "VM.Standard.A1.Flex"
 }
 
 variable "instance_node1" {
