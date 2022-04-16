@@ -10,6 +10,14 @@ Repository contains set of prepared code to deploy free Kubernetes cluster in Or
 
 ## Overall design
 
+```
+python3 -m venv venv
+source venv/bin/activate
+python overall_design.py
+```
+
+![Overall design](design/overall_design.png)
+
 ## Infrastructure
 
 In order to setup infrastructure in OCI using Terraform, there were used:
