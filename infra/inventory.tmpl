@@ -1,0 +1,4 @@
+[k8s]
+%{ for index, ip in public_ip ~}
+${host_name[index]} ansible_host=${ip}
+%{ endfor ~}
