@@ -43,5 +43,5 @@ variable "instance_shape" {
 variable "instance_count" {
   description = "number of instances to create"
   type        = number
-  default     = 2
+  default     = 4
 }
