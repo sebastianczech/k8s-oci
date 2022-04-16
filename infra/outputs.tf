@@ -4,7 +4,7 @@ output "availability_domain" {
 }
 
 output "vcn_state" {
-  description = "The state of the VCN"
+  description = "the state of the VCN"
   value       = oci_core_vcn.k8s_vcn.state
 }
 
@@ -19,7 +19,7 @@ output "vcn_id" {
 }
 
 output "subnet_state" {
-  description = "The state of the subnet"
+  description = "the state of the subnet"
   value       = oci_core_subnet.k8s_subnet.state
 }
 
@@ -33,6 +33,16 @@ output "subnet_cidr" {
   value       = oci_core_subnet.k8s_subnet.cidr_block
 }
 
-output "public_ip_node1" {
-  value = oci_core_instance.k8s_node1.public_ip
+output "compute_instances_public_ip" {
+  description = "public IPs of created nodes"
+  value       = ["${oci_core_instance.k8s_node.*.public_ip}"]
+}
+
+output "compute_instances" {
+  value       = {
+    name       = oci_core_instance.k8s_node.*.display_name
+    public_ip  = oci_core_instance.k8s_node.*.public_ip
+    private_ip = oci_core_instance.k8s_node.*.private_ip
+  }
+  description = "names and IPs of created instances"
 }
