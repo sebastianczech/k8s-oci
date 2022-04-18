@@ -1,6 +1,6 @@
-resource "oci_core_security_list" "k8s_security_list" {
+resource "oci_core_default_security_list" "k8s_vcn_security_list" {
+    manage_default_resource_id = oci_core_vcn.k8s_vcn.default_security_list_id
     compartment_id = var.compartment_id
-    vcn_id = oci_core_vcn.k8s_vcn.id
     display_name = "K8s security list"
     egress_security_rules {
         destination = "0.0.0.0/0"
