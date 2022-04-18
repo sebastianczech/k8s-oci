@@ -3,6 +3,11 @@ variable "compartment_id" {
   type        = string
 }
 
+variable "my_public_ip" {
+  description = "my public IP address"
+  type        = string
+}
+
 variable "profile_name" {
   description = "OCI profile name"
   type        = string
