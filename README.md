@@ -102,7 +102,7 @@ export TF_LOG=WARN
 My public IP address was get using command:
 
 ```
-echo "my_public_ip = \"`curl -s ifconfig.co`\"" 2> /dev/null 1>> terraform.tfvars
+echo "my_public_ip = \"`curl -s ifconfig.co`/32\"" 2> /dev/null 1>> terraform.tfvars
 ```
 
 Access instance:
