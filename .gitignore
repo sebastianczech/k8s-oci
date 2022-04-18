@@ -37,3 +37,6 @@ inventory.ini
 
 # Python venv
 design/venv
+
+# Shell scripts
+ssh_*.sh
