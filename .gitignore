@@ -40,3 +40,6 @@ design/venv
 
 # Shell scripts
 ssh_*.sh
+
+# Python venv
+conf/venv

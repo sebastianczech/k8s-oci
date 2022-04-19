@@ -138,6 +138,16 @@ ubuntu@k8s-node1:~$
 
 ## Configuration
 
+```
+python3 -m venv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
+
+ansible-galaxy init conf-k8s-oracle-cloud
+ansible-playbook -i ../infra/inventory.ini playbook.yml
+```
+
 ## CI/CD
 
 ## Application

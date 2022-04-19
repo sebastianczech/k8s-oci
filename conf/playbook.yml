@@ -1,0 +1,4 @@
+---
+- hosts: k8s
+  roles:
+    - conf-k8s-oracle-cloud
