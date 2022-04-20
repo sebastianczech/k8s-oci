@@ -46,3 +46,8 @@ output "compute_instances" {
   }
   description = "names and IPs of created instances"
 }
+
+output "lb_public_ip" {
+  description = "public IPs of LB"
+  value       = oci_network_load_balancer_network_load_balancer.k8s_network_load_balancer.ip_addresses[0].ip_address
+}

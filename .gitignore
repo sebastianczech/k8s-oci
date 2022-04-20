@@ -35,6 +35,9 @@ override.tf.json
 # Ansible inventory created from Terraform
 inventory.ini
 
+# Ansible variables created from Terraform
+vars.yml
+
 # Python venv
 design/venv
 
