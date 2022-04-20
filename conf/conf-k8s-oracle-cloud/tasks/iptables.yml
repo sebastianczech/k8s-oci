@@ -7,7 +7,6 @@
       Accept: text/plain
   register: public_ip
   delegate_to: localhost
-
 - name: Configure iptables
   block:
   - name: Allow input traffic from my public IP address

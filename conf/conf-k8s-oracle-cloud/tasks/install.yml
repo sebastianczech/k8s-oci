@@ -6,13 +6,11 @@
       name: docker.io
       state: latest
       update_cache: yes
-
   - name: Install microk8s
     snap:
       name: microk8s
       classic: yes
       channel: 1.23/stable
-
   - name: Install kubectl
     snap:
       name: kubectl
