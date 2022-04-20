@@ -1,0 +1,36 @@
+---
+- name: Check that you can connect (GET) to a page and it returns a status 200
+  uri:
+    url: http://ifconfig.co
+    return_content: yes
+    headers:
+      Accept: text/plain
+  register: public_ip
+  delegate_to: localhost
+
+- name: Show my public IP address
+  debug:
+    msg: "{{ public_ip.content | trim }}"
+
+- name: Configure iptables
+  block:
+  - name: Allow input traffic from my public IP address
+    lineinfile:
+      path: /etc/iptables/rules.v4
+      regexp: "^-I INPUT -s.*/32 -j ACCEPT"
+      insertbefore: '^-A OUTPUT -d.*'
+      firstmatch: yes
+      line: "-I INPUT -s {{ public_ip.content | trim  }}/32 -j ACCEPT"
+  - name: Allow input traffic from subnet 172.16.0.0/24
+    lineinfile:
+      path: /etc/iptables/rules.v4
+      regexp: "^-I INPUT -s.*/24  -j ACCEPT"
+      insertbefore: '^-A OUTPUT -d.*'
+      firstmatch: yes
+      line: "-I INPUT -s 172.16.0.0/24 -j ACCEPT"
+  - name: Remove stop forwarding icmp-host-prohibited
+    lineinfile:
+      path: /etc/iptables/rules.v4
+      regexp: "^-A FORWARD -j REJECT --reject-with icmp-host-prohibited$"
+      state: absent
+  become: true

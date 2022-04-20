@@ -1,3 +1,6 @@
 ---
 - name: Install required packages
   include_tasks: install.yml
+
+- name: Configure security settings
+  include_tasks: security.yml
