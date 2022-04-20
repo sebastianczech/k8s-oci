@@ -2,5 +2,8 @@
 - name: Install required packages
   include_tasks: install.yml
 
-- name: Configure security settings
-  include_tasks: security.yml
+- name: Configure security settings in iptables
+  include_tasks: iptables.yml
+
+- name: Configure microk8s cluster
+  include_tasks: microk8s.yml

@@ -1,0 +1,23 @@
+---
+- name: Get node public IP address
+  uri:
+    url: http://ifconfig.co
+    return_content: yes
+    headers:
+      Accept: text/plain
+  register: public_ip
+
+- name: Show node public IP address
+  debug:
+    msg: "{{ public_ip.content | trim }}"
+
+- name: Configure IP address in certificate
+  block:
+  - name: Add node public IP as a SAN in certificate
+    lineinfile:
+      path: /tmp/a
+      regexp: "^IP.50 = .*"
+      insertbefore: '^#MOREIPS'
+      firstmatch: yes
+      line: "IP.50 = {{ public_ip.content | trim }}"
+  become: true
