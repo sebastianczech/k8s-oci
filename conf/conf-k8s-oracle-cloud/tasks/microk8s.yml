@@ -22,6 +22,13 @@
       insertbefore: '^#MOREIPS'
       firstmatch: yes
       line: "IP.60 = {{ ansible_facts['enp0s3']['ipv4']['address'] }}"
+  - name: Add LB public IP as a SAN in certificate
+    lineinfile:
+      path: /var/snap/microk8s/current/certs/csr.conf.template
+      regexp: "^IP.70 = .*"
+      insertbefore: '^#MOREIPS'
+      firstmatch: yes
+      line: "IP.70 = {{ lb_public_ip }}"
   - name: Refresh certificates
     command: microk8s refresh-certs
   - name: Reboot host and wait for it to restart

@@ -16,13 +16,13 @@
       insertbefore: '^-A OUTPUT -d.*'
       firstmatch: yes
       line: "-I INPUT -s {{ public_ip.content | trim }}/32 -j ACCEPT"
-  - name: Allow input traffic from subnet 172.16.0.0/24
+  - name: Allow input traffic from subnet
     lineinfile:
       path: /etc/iptables/rules.v4
       regexp: "^-I INPUT -s.*/24  -j ACCEPT"
       insertbefore: '^-A OUTPUT -d.*'
       firstmatch: yes
-      line: "-I INPUT -s 172.16.0.0/24 -j ACCEPT"
+      line: "-I INPUT -s {{ subnet_cidr }} -j ACCEPT"
   - name: Remove stop forwarding icmp-host-prohibited
     lineinfile:
       path: /etc/iptables/rules.v4
