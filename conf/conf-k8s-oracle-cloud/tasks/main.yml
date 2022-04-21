@@ -9,5 +9,8 @@
 - name: Configure security settings in iptables
   include_tasks: iptables.yml
 
+- name: Configure microk8s certificates
+  include_tasks: microk8s_certs.yml
+
 - name: Configure microk8s cluster
-  include_tasks: microk8s.yml
+  include_tasks: microk8s_cluster.yml

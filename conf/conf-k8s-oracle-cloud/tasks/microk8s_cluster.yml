@@ -1,0 +1,19 @@
+---
+- name: Configure Kubernetes cluster
+  block:
+  - name: List nodes in Kubernetes cluster on node 0
+    command: microk8s kubectl get nodes
+    register: node0_k8s_list_nodes
+    changed_when: False
+    when: 'inventory_hostname == "k8s_node0"'
+  - name: Get command to add node 1 to cluster
+    command: microk8s add-node
+    register: node0_k8s_add_node1
+    when: 
+    - 'inventory_hostname == "k8s_node0"'
+    - '"k8s_node1" not in node0_k8s_list_nodes.stdout'
+  - name: Add node 1 to cluster
+    debug:
+      msg: "{{ node0_k8s_add_node1.stdout_lines[1] }}"
+    when: 'inventory_hostname == "k8s_node0"'
+  become: true

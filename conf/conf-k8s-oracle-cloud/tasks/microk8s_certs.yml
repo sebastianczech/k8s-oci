@@ -6,7 +6,7 @@
     headers:
       Accept: text/plain
   register: public_ip
-- name: Configure IP address in certificate
+- name: Configure IP addresses in certificates
   block:
   - name: Add node public IP as a SAN in certificate
     lineinfile:
