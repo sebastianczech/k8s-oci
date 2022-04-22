@@ -1,10 +1,10 @@
 ---
-- name: Set node name
+- name: Set node {{ item }} name
   set_fact:
     node_name: "k8s_node{{ item }}"
 - name: Join node to Kubernetes cluster
   block:
-  - name: Get command to add node to cluster
+  - name: Get command to add node {{ item }} to cluster
     command: microk8s add-node
     register: node0_k8s_add_node_to_join
   - name: Add node {{ item }} to cluster
