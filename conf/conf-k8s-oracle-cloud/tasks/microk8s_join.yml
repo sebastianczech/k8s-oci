@@ -1,0 +1,15 @@
+---
+- name: Set node name
+  set_fact:
+    node_name: "k8s_node{{ item }}"
+- name: Join node to Kubernetes cluster
+  block:
+  - name: Get command to add node to cluster
+    command: microk8s add-node
+    register: node0_k8s_add_node_to_join
+  - name: Add node {{ item }} to cluster
+    command: "{{ node0_k8s_add_node_to_join.stdout_lines[1] }}"
+    register: node0_k8s_result_node_to_join
+    delegate_to: "{{ node_name }}"
+  when: 'node_name | regex_replace("_","-") not in node0_k8s_list_nodes.stdout'
+  become: true
