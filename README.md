@@ -139,7 +139,9 @@ Playbook is going to:
 
 ## Application
 
-Simple web application in Python with Flask can be run locally after installing required libraries:
+To check how cluster is performing, simple web application in Python with Flask was prepared.
+
+It can run locally after installing required libraries:
 
 ```
 cd conf
@@ -186,4 +188,4 @@ docker tag python-flask-api-hostname-env-time:1.0 sebaczech/python-flask-api-hos
 docker push sebaczech/python-flask-api-hostname-env-time:1.0
 ```
 
-To automate process, simple pipeline in [GitHub Actions](..github/workflows/ci-app.yml) was prepared.
+To automate process, simple pipeline in [GitHub Action](.github/workflows/ci-app.yml) was prepared.
