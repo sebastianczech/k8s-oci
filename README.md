@@ -4,10 +4,13 @@ Repository contains set of prepared code to deploy free Kubernetes cluster in Or
 * Terraform to provision infrastructure
 * Ansible to configure compute instances and setup K8s cluster
 
-For future there are plans to extend it by adding:
-* GitHub Actions for CI/CD pipeline
+Moreover there was prepared
 * Python application deployed by pipeline in created K8s cluster
+* GitHub Actions for CI/CD pipeline
 * Helm charts used to deployed application
+
+For future there are plans to extend repository by adding:
+* Extended pipeline with automated tests
 * Integration with AWS services
 
 ## Overall design
@@ -182,3 +185,5 @@ docker tag python-flask-api-hostname-env-time:latest python-flask-api-hostname-e
 docker tag python-flask-api-hostname-env-time:1.0 sebaczech/python-flask-api-hostname-env-time:1.0
 docker push sebaczech/python-flask-api-hostname-env-time:1.0
 ```
+
+To automate process, simple pipeline in [GitHub Actions](..github/workflows/ci-app.yml) was prepared.
