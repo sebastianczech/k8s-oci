@@ -76,7 +76,7 @@ Then changes to be provisioned can be checked using:
 terraform plan
 ```
 
-All variables defined in [variables.tf](infra/variables.tf) contain default values besides 2:
+All variables defined in [variables.tf](infra/variables.tf) contain default values besides 2 variables:
 - ``compartment_id``
 - ``my_public_ip``
 
@@ -106,9 +106,9 @@ terraform output
 ```
 
 Moreover there will be generated automatically:
-- Ansible inventory from [template](infra/inventory.tmpl)
-- Ansible varialbes from [template](infra/vars.tmpl)
-- scripts to connect to machines via ssh using [template](infra/ssh.tmpl)
+- ``inventory.ini`` - Ansible inventory from [template](infra/inventory.tmpl)
+- ``vars.yml`` - Ansible varialbes from [template](infra/vars.tmpl)
+- ``ssh_k8s_node0.sh``, ``ssh_k8s_node1.sh``, ``ssh_k8s_node2.sh``, ``ssh_k8s_node3.sh`` - scripts to connect to machines via ssh using [template](infra/ssh.tmpl)
 
 ## Configuration
 
@@ -121,7 +121,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-To use Ansible role and prepared playbook, you can execute command:
+To use Ansible role and prepared playbook from [conf](conf), you can execute command:
 
 ```
 cd conf
