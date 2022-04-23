@@ -46,3 +46,7 @@ ssh_*.sh
 
 # Python venv
 conf/venv
+
+# App env
+
+app/venv

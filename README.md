@@ -133,3 +133,40 @@ Playbook is going to:
 - configure ``iptables``
 - generate certificates used by ``microk8s``
 - configure ``microk8s`` cluster
+
+## Application
+
+```
+cd conf
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+```
+python3 app.py
+```
+
+```
+curl http://localhost:5080/
+
+{
+"CONFIG": "None",
+"HOST": "Sebastian.local",
+"TIME": "20:18:24"
+}
+```
+
+```
+docker build -t python-flask-api-hostname-env-time .
+```
+
+```
+docker run -it --rm -p 127.0.0.1:5080:5080 --name python-flask-api-hostname-env-time python-flask-api-hostname-env-time
+```
+
+```
+docker tag python-flask-api-hostname-env-time:latest python-flask-api-hostname-env-time:1.0
+docker tag python-flask-api-hostname-env-time:1.0 sebaczech/python-flask-api-hostname-env-time:1.0   
+docker push sebaczech/python-flask-api-hostname-env-time:1.0
+```
