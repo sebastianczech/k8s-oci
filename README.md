@@ -4,7 +4,7 @@ Repository contains set of prepared code to deploy free Kubernetes cluster in Or
 * Terraform to provision infrastructure
 * Ansible to configure compute instances and setup K8s cluster
 
-For future I have a plan to extend it by adding:
+For future there are plans to extend it by adding:
 * GitHub Actions for CI/CD pipeline
 * Python application deployed by pipeline in created K8s cluster
 * Helm charts used to deployed application
@@ -14,11 +14,18 @@ For future I have a plan to extend it by adding:
 
 Code to deploy and configure free Kubernetes cluster in Oracle Cloud is based on idea of [Tomek's free ebook „Jak utworzyć całkowicie darmowy klaster Kubernetes w chmurze”](https://cloudowski.com/e-book-jak-utworzyc-calkowicie-darmowy-klaster-kubernetes-w-chmurze).
 
-At first I started to prepare schema to present what is being configured in Oracle Cloud. As I like approach *everything as a code*, I prepared diagram in code using [Diagram as Code](https://diagrams.mingrammer.com/) and commands:
+At first it was prepared schema to present what is being configured in Oracle Cloud. Overall desing was prepared using [Diagram as Code](https://diagrams.mingrammer.com/), which can be installed using commands:
 
 ```
+cd design
 python3 -m venv venv
 source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Diagram is generated as PNG using command:
+
+```
 python overall_design.py
 ```
 
@@ -28,12 +35,12 @@ Overall desing consists of compute nodes, virtual network, loab balancer, route 
 
 ## Infrastructure
 
-In order to setup infrastructure in OCI using Terraform, there were used:
+In order to setup infrastructure in OCI using Terraform, you can use below documentation to find more information:
 * [Oracle documentation](https://docs.oracle.com/en-us/iaas/developer-tutorials/tutorials/tf-simple-infrastructure/01-summary.htm)
 * [Terraform documentation](https://learn.hashicorp.com/collections/terraform/oci-get-started)
 * [OCI provider](https://registry.terraform.io/providers/oracle/oci/latest)
 
-After installing ``Terraform CLI`` and ``OCI CLI``, the first step was to authenticate in Oracle Cloud:
+After installing ``Terraform CLI`` and ``OCI CLI``, the first step was to authenticate in Oracle Cloud and save session in profile ``k8s-oci``:
 
 ```shell
 oci session authenticate
@@ -54,19 +61,19 @@ Token can be later refreshed by command:
 oci session refresh --profile k8s-oci
 ```
 
-Prepared in [infrastructure configuration](infra) can be applied by commands
+Whole infrastacture as a code was prepared in [infra](infra) directory. 
+
+At first Terraform needs to initialized:
 
 ```shell
 cd infra
-terraform init # init Terraform
-terraform fmt # format code
-terraform validate # check if configuration is valid
-terraform plan # show changes to be provisioned
-terraform apply # create or update configuration
-terraform apply -auto-approve # create or update configuration without asking for additional approval
-terraform show # show current state of configuration
-terraform state list # list current state
-terraform output # display outputs value
+terraform init
+```
+
+Then changes to be provisioned can be checked using:
+
+```
+terraform plan
 ```
 
 All variables defined in [variables.tf](infra/variables.tf) contain default values besides 2:
@@ -80,25 +87,41 @@ My public IP address you can get using command:
 echo "my_public_ip = \"`curl -s ifconfig.co`/32\"" 2> /dev/null 1>> terraform.tfvars
 ```
 
-After configuring all elements from overall design, in Terraform output you will get all details required to configure Kubernetes cluster. Moreover there will be generated automatically:
+At the end whole configuration can be provisioned by command:
+
+```
+terraform apply -auto-approve
+```
+
+In order to check current state, you can use command:
+
+```
+terraform show
+```
+
+After configuring all elements from overall design, in Terraform output you will get all details required to configure Kubernetes cluster. 
+
+```
+terraform output
+```
+
+Moreover there will be generated automatically:
 - Ansible inventory from [template](infra/inventory.tmpl)
 - Ansible varialbes from [template](infra/vars.tmpl)
 - scripts to connect to machines via ssh using [template](infra/ssh.tmpl)
 
 ## Configuration
 
-Terraform is greate for infrastrcture, but for configuration I like Ansible. Using below commands you can install Ansible via pip and create role from scratch (if you want)
+Terraform is greate for infrastrcture, but for configuration Ansible was used. Using below commands you can install Ansible via pip:
 
 ```
+cd conf
 python3 -m venv venv
 source venv/bin/activate
-
 pip install -r requirements.txt
-
-ansible-galaxy init conf-k8s-oracle-cloud
 ```
 
-To use Ansible role and playbook prepared by me, you can directly execute command:
+To use Ansible role and prepared playbook, you can execute command:
 
 ```
 cd conf
