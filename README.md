@@ -4,13 +4,14 @@ Repository contains set of prepared code to deploy free Kubernetes cluster in Or
 * Terraform to provision infrastructure
 * Ansible to configure compute instances and setup K8s cluster
 
-Moreover there was prepared
-* Python application deployed by pipeline in created K8s cluster
-* GitHub Actions for CI/CD pipeline
+Moreover there were prepared:
+* Python application, which can be deployed in created K8s cluster
+* GitHub Actions to automate build process
 * Helm charts used to deployed application
 
 For future there are plans to extend repository by adding:
 * Extended pipeline with automated tests
+* Add GitHub Actions to configure infrastructure
 * Integration with AWS services
 
 ## Overall design
