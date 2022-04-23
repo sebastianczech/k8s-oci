@@ -1,3 +1,5 @@
+# Error 1 - computer node invalid shape 
+
 While creating instance I have an error like below:
 
 ```
