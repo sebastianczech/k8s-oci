@@ -10,9 +10,9 @@ For future I have a plan to extend it by adding:
 * Helm charts used to deployed application
 * Integration with AWS services
 
-## Overall designde
+## Overall design
 
-Prepare by me code to deploy and configure free Kubernetes cluster in Oracle Cloud is based on idea of [Tomek's free ebook „Jak utworzyć całkowicie darmowy klaster Kubernetes w chmurze”](https://cloudowski.com/e-book-jak-utworzyc-calkowicie-darmowy-klaster-kubernetes-w-chmurze). Based on manual actions described and explained by Tomek, I prepared code to automate whole process. 
+Code to deploy and configure free Kubernetes cluster in Oracle Cloud is based on idea of [Tomek's free ebook „Jak utworzyć całkowicie darmowy klaster Kubernetes w chmurze”](https://cloudowski.com/e-book-jak-utworzyc-calkowicie-darmowy-klaster-kubernetes-w-chmurze).
 
 At first I started to prepare schema to present what is being configured in Oracle Cloud. As I like approach *everything as a code*, I prepared diagram in code using [Diagram as Code](https://diagrams.mingrammer.com/) and commands:
 
@@ -22,7 +22,7 @@ source venv/bin/activate
 python overall_design.py
 ```
 
-Overall desing consists of compute nodes, networking settings like VCN, loab balancer, route table and Internet gateway:
+Overall desing consists of compute nodes, virtual network, loab balancer, route table and Internet gateway:
 
 ![Overall design](design/overall_design.png)
 
@@ -54,95 +54,35 @@ Token can be later refreshed by command:
 oci session refresh --profile k8s-oci
 ```
 
-Prepared in [infrastructure configuration](infra/main.tf) can be applied by commands
+Prepared in [infrastructure configuration](infra) can be applied by commands
 
 ```shell
-terraform init
-terraform fmt
-terraform validate
-terraform plan
-terraform apply
-terraform apply -auto-approve
-terraform show
-terraform state list
-terraform output
-terraform destroy
+terraform init # init Terraform
+terraform fmt # format code
+terraform validate # check if configuration is valid
+terraform plan # show changes to be provisioned
+terraform apply # create or update configuration
+terraform apply -auto-approve # create or update configuration without asking for additional approval
+terraform show # show current state of configuration
+terraform state list # list current state
+terraform output # display outputs value
 ```
 
-Error while creating instance:
+All variables defined in [variables.tf](infra/variables.tf) contain default values besides 2:
+- ``compartment_id``
+- ``my_public_ip``
 
-```
-│ Error: 404-NotAuthorizedOrNotFound, Authorization failed or requested resource not found. 
-│ Suggestion: Either the resource has been deleted or service Core Instance need policy to access this resource. Policy reference: https://docs.oracle.com/en-us/iaas/Content/Identity/Reference/policyreference.htm
-│ Documentation: https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_instance 
-│ Request Target: POST https://iaas.eu-frankfurt-1.oraclecloud.com/20160918/instances 
-│ Provider version: 4.71.0, released on 2022-04-13.  
-│ Service: Core Instance 
-│ Operation Name: LaunchInstance 
-│ OPC request ID: 88ad55177b0228b8cd762f4496e7bd83/13144EC3AA8F8B851E92F26FBFC83F57/2A762550DCFB74C14705562A56044EA1 
-│ 
-│ 
-│   with oci_core_instance.ubuntu_instance,
-│   on main.tf line 34, in resource "oci_core_instance" "ubuntu_instance":
-│   34: resource "oci_core_instance" "ubuntu_instance" {
-```
-
-Searching for root cause of the problem by checking work request:
-
-```
-oci iam work-request get --work-request-id 88ad55177b0228b8cd762f4496e7bd83/13144EC3AA8F8B851E92F26FBFC83F57/2A762550DCFB74C14705562A56044EA1
-```
-
-Then next step was changing Terraform log level into DEBUG:
-
-```
-export TF_LOG=DEBUG
-terraform apply -auto-approve
-```
-
-Problem was connected with invalid shape. 
-After resolving issue, warning log level was set:
-
-```
-export TF_LOG=WARN
-```
-
-My public IP address was get using command:
+First value you can take from [Oracle Cloud web console](https://cloud.oracle.com/identity/compartments).
+My public IP address you can get using command:
 
 ```
 echo "my_public_ip = \"`curl -s ifconfig.co`/32\"" 2> /dev/null 1>> terraform.tfvars
 ```
 
-Access instance:
-
-```
-> ssh ubuntu@130.61.28.194
-Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.13.0-1018-oracle aarch64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-  System information as of Fri Apr 15 22:58:11 UTC 2022
-
-  System load:  0.03              Processes:               152
-  Usage of /:   3.0% of 44.97GB   Users logged in:         0
-  Memory usage: 3%                IPv4 address for enp0s3: 172.16.0.173
-  Swap usage:   0%
-
-
-0 updates can be applied immediately.
-
-
-The list of available updates is more than a week old.
-To check for new updates run: sudo apt update
-
-Last login: Fri Apr 15 22:57:59 2022 from 91.226.196.92
-To run a command as administrator (user "root"), use "sudo <command>".
-See "man sudo_root" for details.
-
-ubuntu@k8s-node1:~$ 
-```
+After configuring all elements from overall design, in Terraform output you will get all details required to configure Kubernetes cluster. Moreover there will be generated automatically:
+- Ansible inventory from [template](infra/inventory.tmpl)
+- Ansible varialbes from [template](infra/vars.tmpl)
+- scripts to connect to machines via ssh using [template](infra/ssh.tmpl)
 
 ## Configuration
 
