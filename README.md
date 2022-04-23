@@ -3,18 +3,26 @@
 Repository contains set of prepared code to deploy free Kubernetes cluster in Oracle Cloud Infrastructure (OCI) and it's using:
 * Terraform to provision infrastructure
 * Ansible to configure compute instances and setup K8s cluster
+
+For future I have a plan to extend it by adding:
 * GitHub Actions for CI/CD pipeline
 * Python application deployed by pipeline in created K8s cluster
 * Helm charts used to deployed application
 * Integration with AWS services
 
-## Overall design
+## Overall designde
+
+Prepare by me code to deploy and configure free Kubernetes cluster in Oracle Cloud is based on idea of [Tomek's free ebook „Jak utworzyć całkowicie darmowy klaster Kubernetes w chmurze”](https://cloudowski.com/e-book-jak-utworzyc-calkowicie-darmowy-klaster-kubernetes-w-chmurze). Based on manual actions described and explained by Tomek, I prepared code to automate whole process. 
+
+At first I started to prepare schema to present what is being configured in Oracle Cloud. As I like approach *everything as a code*, I prepared diagram in code using [Diagram as Code](https://diagrams.mingrammer.com/) and commands:
 
 ```
 python3 -m venv venv
 source venv/bin/activate
 python overall_design.py
 ```
+
+Overall desing consists of compute nodes, networking settings like VCN, loab balancer, route table and Internet gateway:
 
 ![Overall design](design/overall_design.png)
 
