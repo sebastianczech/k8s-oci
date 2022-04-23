@@ -57,6 +57,7 @@ oci session refresh --profile k8s-oci
 Prepared in [infrastructure configuration](infra) can be applied by commands
 
 ```shell
+cd infra
 terraform init # init Terraform
 terraform fmt # format code
 terraform validate # check if configuration is valid
@@ -86,6 +87,8 @@ After configuring all elements from overall design, in Terraform output you will
 
 ## Configuration
 
+Terraform is greate for infrastrcture, but for configuration I like Ansible. Using below commands you can install Ansible via pip and create role from scratch (if you want)
+
 ```
 python3 -m venv venv
 source venv/bin/activate
@@ -93,9 +96,17 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 ansible-galaxy init conf-k8s-oracle-cloud
+```
+
+To use Ansible role and playbook prepared by me, you can directly execute command:
+
+```
+cd conf
 ansible-playbook -i ../infra/inventory.ini playbook.yml
 ```
 
-## CI/CD
-
-## Application
+Playbook is going to:
+- install required packages like ``Docker`` or ``microk8s``
+- configure ``iptables``
+- generate certificates used by ``microk8s``
+- configure ``microk8s`` cluster
