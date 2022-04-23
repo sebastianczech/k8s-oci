@@ -28,4 +28,4 @@ jobs:
         context: ./app
         file: ./app/Dockerfile
         push: true
-        tags: "1.1"
+        tags: "sebaczech/python-flask-api-hostname-env-time:1.0"
