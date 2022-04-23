@@ -61,7 +61,7 @@ Token can be later refreshed by command:
 oci session refresh --profile k8s-oci
 ```
 
-Whole infrastacture as a code was prepared in [infra](infra) directory. 
+Whole infrastacture as a code was prepared in [infra](infra) directory.
 
 At first Terraform needs to initialized:
 
@@ -99,7 +99,7 @@ In order to check current state, you can use command:
 terraform show
 ```
 
-After configuring all elements from overall design, in Terraform output you will get all details required to configure Kubernetes cluster. 
+After configuring all elements from overall design, in Terraform output you will get all details required to configure Kubernetes cluster.
 
 ```
 terraform output
@@ -136,6 +136,8 @@ Playbook is going to:
 
 ## Application
 
+Simple web application in Python with Flask can be run locally after installing required libraries:
+
 ```
 cd conf
 python3 -m venv venv
@@ -143,9 +145,13 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+To start app, use below command:
+
 ```
 python3 app.py
 ```
+
+To check, if it's working, use command:
 
 ```
 curl http://localhost:5080/
@@ -157,16 +163,22 @@ curl http://localhost:5080/
 }
 ```
 
+Application can be packaged into Docker image:
+
 ```
 docker build -t python-flask-api-hostname-env-time .
 ```
+
+Which can also be run locally:
 
 ```
 docker run -it --rm -p 127.0.0.1:5080:5080 --name python-flask-api-hostname-env-time python-flask-api-hostname-env-time
 ```
 
+Finally we can push to e.g. Docker Hub:
+
 ```
 docker tag python-flask-api-hostname-env-time:latest python-flask-api-hostname-env-time:1.0
-docker tag python-flask-api-hostname-env-time:1.0 sebaczech/python-flask-api-hostname-env-time:1.0   
+docker tag python-flask-api-hostname-env-time:1.0 sebaczech/python-flask-api-hostname-env-time:1.0
 docker push sebaczech/python-flask-api-hostname-env-time:1.0
 ```
