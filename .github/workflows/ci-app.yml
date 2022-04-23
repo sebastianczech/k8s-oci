@@ -28,4 +28,4 @@ jobs:
         context: ./app
         file: ./app/Dockerfile
         push: true
-        tags: "1.0"
+        tags: "1.1"
