@@ -238,4 +238,4 @@ helm uninstall --namespace flask-api flask-api
 
 ### Use app from Internet
 
-In order to access app from Internet, NGINX controller was configured by [Ansible playbook](conf/conf-k8s-oracle-cloud/tasks/microk8s_ingress.yml) and [Helm chart](app/flask-api/Chart.yaml) was adjusted.
+In order to access app from Internet, NGINX controller was configured by [Ansible playbook](conf/conf-k8s-oracle-cloud/tasks/microk8s_ingress.yml) and [Helm chart](app/flask-api/values.yaml) was adjusted.
