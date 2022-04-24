@@ -43,4 +43,6 @@
       name: ubuntu
       groups: microk8s
       append: yes
+  - name: Flush handlers
+    meta: flush_handlers
   become: true
