@@ -7,14 +7,14 @@ Repository contains set of prepared code to deploy free Kubernetes cluster in Or
 Moreover there were prepared:
 * Python application, which can be deployed in created K8s cluster
 * GitHub Actions to automate build process and push image to Docker Hub
-* Helm charts used to deployed application
+* Helm charts used to deploye application
 
 For future there are plans to extend repository by adding:
-* Extended existing pipeline for application by adding:
+* Extension to existing pipeline for application by adding:
   * Automated tests in continuous integration
   * Continuous deployment after finishing build and push image to Docker Hub
 * Add new GitHub Action to configure infrastructure
-* Integration of existing application with AWS services
+* Integration of existing application with AWS services (Free Tier)
 * Alternative to Terraform code to configure infrastructure using Pulumi
 * Alternative to Helm code to deploy application using Kustomize
 
@@ -199,7 +199,7 @@ To automate process, simple pipeline in [GitHub Action](.github/workflows/ci-app
 
 ### Deployment
 
-In order to simplify deployment of application into Kubernetes, tool[Helm](https://helm.sh/docs/intro/quickstart/) was used to create chart and install it on created cluster using commands:
+In order to simplify deployment of application into Kubernetes, tool [Helm](https://helm.sh/docs/intro/quickstart/) was used to create chart and install it on created cluster using commands:
 
 ```
 cd app
@@ -235,3 +235,6 @@ Finally application can be uninstalled, if not needed:
 ```
 helm uninstall --namespace flask-api flask-api
 ```
+
+### Use app from Internet
+
