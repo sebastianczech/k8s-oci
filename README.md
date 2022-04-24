@@ -195,7 +195,7 @@ docker tag python-flask-api-hostname-env-time:1.0 sebaczech/python-flask-api-hos
 docker push sebaczech/python-flask-api-hostname-env-time:1.0
 ```
 
-To automate process, simple pipeline in [GitHub Action](.github/workflows/ci-app.yml) was prepared.
+To automate process, simple pipeline in [GitHub Action](.github/workflows/ci-app.yml) was prepared, which contains only 1 job to build and push image to Docker Hub. Moreover pipeline is building image for multiple platforms, including arm64, which is used on nodes created in Kubernets cluster in Oracle Cloud.
 
 ### Deployment
 
