@@ -14,3 +14,6 @@
 
 - name: Configure microk8s cluster
   include_tasks: microk8s_cluster.yml
+
+- name: Configure microk8s ingress
+  include_tasks: microk8s_ingress.yml
