@@ -41,7 +41,7 @@ resource "oci_network_load_balancer_backend" "nginx_http_backend" {
 
 resource "oci_network_load_balancer_backend_set" "nginx_http_backend_set" {
     health_checker {
-        protocol = "HTTPS"
+        protocol = "HTTP"
         interval_in_millis = 10000
         port = 80
         retries = 3
