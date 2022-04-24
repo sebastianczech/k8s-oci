@@ -27,5 +27,6 @@ jobs:
       with:
         context: ./app
         file: ./app/Dockerfile
+        platforms: linux/amd64,linux/arm64,linux/ppc64le
         push: true
         tags: "sebaczech/python-flask-api-hostname-env-time:1.0"
