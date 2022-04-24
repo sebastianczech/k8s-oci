@@ -6,13 +6,17 @@ Repository contains set of prepared code to deploy free Kubernetes cluster in Or
 
 Moreover there were prepared:
 * Python application, which can be deployed in created K8s cluster
-* GitHub Actions to automate build process
+* GitHub Actions to automate build process and push image to Docker Hub
 * Helm charts used to deployed application
 
 For future there are plans to extend repository by adding:
-* Extended pipeline with automated tests
-* Add GitHub Actions to configure infrastructure
-* Integration with AWS services
+* Extended existing pipeline for application by adding:
+  * Automated tests in continuous integration
+  * Continuous deployment after finishing build and push image to Docker Hub
+* Add new GitHub Action to configure infrastructure
+* Integration of existing application with AWS services
+* Alternative to Terraform code to configure infrastructure using Pulumi
+* Alternative to Helm code to deploy application using Kustomize
 
 ## Overall design
 
@@ -116,7 +120,7 @@ Moreover there will be generated automatically:
 
 ## Configuration
 
-Terraform is greate for infrastrcture, but for configuration Ansible was used. Using below commands you can install Ansible via pip:
+Terraform is great for infrastrcture, but for configuration Ansible was used. Using below commands you can install Ansible via pip:
 
 ```
 cd conf
@@ -139,6 +143,8 @@ Playbook is going to:
 - configure ``microk8s`` cluster
 
 ## Application
+
+### Continuous integration
 
 To check how cluster is performing, simple web application in Python with Flask was prepared.
 
@@ -190,3 +196,42 @@ docker push sebaczech/python-flask-api-hostname-env-time:1.0
 ```
 
 To automate process, simple pipeline in [GitHub Action](.github/workflows/ci-app.yml) was prepared.
+
+### Deployment
+
+In order to simplify deployment of application into Kubernetes, tool[Helm](https://helm.sh/docs/intro/quickstart/) was used to create chart and install it on created cluster using commands:
+
+```
+cd app
+helm upgrade --install --atomic \
+      --create-namespace --namespace flask-api \
+      -f flask-api/values.yaml \
+      flask-api flask-api
+```
+
+Get the application URL by running these commands on one of the Kubernetes nodes:
+
+```
+export NODE_PORT=$(kubectl get --namespace flask-api -o jsonpath="{.spec.ports[0].nodePort}" services flask-api-chart)
+export NODE_IP=$(kubectl get nodes --namespace flask-api -o jsonpath="{.items[0].status.addresses[0].address}")
+echo http://$NODE_IP:$NODE_PORT
+```
+
+Installed application can be checked by commands:
+
+```
+helm list --namespace flask-api
+helm status --namespace flask-api flask-api
+```
+
+In order to get more information what objects were created in Kubernetes, use commands:
+
+```
+kubectl get all --all-namespaces
+```
+
+Finally application can be uninstalled, if not needed:
+
+```
+helm uninstall --namespace flask-api flask-api
+```
