@@ -17,15 +17,8 @@ serviceAccount:
 podAnnotations: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
 
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
 app:
   port: 5080
@@ -37,20 +30,13 @@ service:
 ingress:
   enabled: true
   className: ""
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  paths:
-    - /
+  annotations: {}
   hosts:
-    - host: flask-api.local
+    - host: 130.61.27.114
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls: []
-  #  - secretName: flask-api-tls
-  #    hosts:
-  #      - flask-api.local
 
 resources:
   limits:
