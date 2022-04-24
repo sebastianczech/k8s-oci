@@ -4,7 +4,7 @@ resource "oci_network_load_balancer_backend" "k8s_backend" {
     network_load_balancer_id = oci_network_load_balancer_network_load_balancer.k8s_network_load_balancer.id
     port = 16443
     ip_address = oci_core_instance.k8s_node[count.index].private_ip
-    name = oci_core_instance.k8s_node[count.index].display_name
+    name = "k8s_backend_${oci_core_instance.k8s_node[count.index].display_name}"
 }
 
 resource "oci_network_load_balancer_backend_set" "k8s_backend_set" {
@@ -36,7 +36,7 @@ resource "oci_network_load_balancer_backend" "nginx_http_backend" {
     network_load_balancer_id = oci_network_load_balancer_network_load_balancer.k8s_network_load_balancer.id
     port = 80
     ip_address = oci_core_instance.k8s_node[count.index].private_ip
-    name = oci_core_instance.k8s_node[count.index].display_name
+    name = "nginx_http_backend${oci_core_instance.k8s_node[count.index].display_name}"
 }
 
 resource "oci_network_load_balancer_backend_set" "nginx_http_backend_set" {
