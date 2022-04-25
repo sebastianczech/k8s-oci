@@ -33,6 +33,12 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: PYTHON_HOSTNAME_ENV_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: flask-api-configmap
+                  key: python_hostname_env_version
           ports:
             - name: http
               containerPort: {{ .Values.app.port }}
