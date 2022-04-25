@@ -32,8 +32,7 @@ ingress:
   className: ""
   annotations: {}
   hosts:
-    - host: 130.61.27.114
-      paths:
+    - paths:
         - path: /
           pathType: Prefix
   tls: []
