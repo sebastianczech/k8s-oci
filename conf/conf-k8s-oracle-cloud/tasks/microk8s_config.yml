@@ -1,0 +1,29 @@
+---
+- name: Get config of microk8s
+  block:
+  - name: Get config of microk8s
+    command: microk8s config
+    register: k8s_config
+    changed_when: False
+    become: true
+  - name: Save config in local file
+    copy:
+      content: "{{ k8s_config.stdout }}"
+      dest: ~/.kube/microk8s.conf
+    delegate_to: localhost
+  - name: Change IP address to load balancer public IP
+    lineinfile:
+      path:  ~/.kube/microk8s.conf
+      regexp: "^\\s+server:.*"
+      insertafter: '^\\s+certificate-authority-data:.*'
+      firstmatch: yes
+      line: "    server: https://{{ lb_public_ip }}:16443"    
+    delegate_to: localhost
+  - name: Show command to execute on local machine
+    debug:
+      msg:
+      - "In order to access configured microk8s cluster, use command:"
+      - "export KUBECONFIG=$KUBECONFIG:~/.kube/config:~/.kube/microk8s.conf"
+      - "You can then check, if it's working, using command:"
+      - "kubectl get all --all-namespaces"
+  when: 'inventory_hostname == "k8s_node0"'

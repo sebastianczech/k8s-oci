@@ -17,3 +17,6 @@
 
 - name: Configure microk8s ingress
   include_tasks: microk8s_ingress.yml
+
+- name: Get config of microk8s
+  include_tasks: microk8s_config.yml
