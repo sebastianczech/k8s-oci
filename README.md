@@ -1,5 +1,7 @@
 # k8s-oci
 
+## About repository
+
 Repository contains set of prepared code to deploy free Kubernetes cluster in Oracle Cloud Infrastructure (OCI) and it's using:
 * Terraform to provision infrastructure
 * Ansible to configure compute instances and setup K8s cluster
@@ -17,6 +19,26 @@ For future there are plans to extend repository by adding:
 * Integration of existing application with AWS services (Free Tier)
 * Alternative to Terraform code to configure infrastructure using Pulumi
 * Alternative to Helm code to deploy application using Kustomize
+
+## Quickstart
+
+1. Install prerequisites on local machine:
+   1. [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)
+   2. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+   3. [Helm](https://helm.sh/docs/intro/install/)
+2. Clone repository:
+   1. ``git clone https://github.com/sebastianczech/k8s-oci``
+   2. ``cd k8s-oci``
+3. Provision infrastructure:
+   1. ``cd infra``
+   2. ``terraform plan``
+   3. ``terraform apply -auto-approve``
+4. Configure Kubernetes:
+   1. ``cd ../conf``
+   2. ``ansible-playbook -i ../infra/inventory.ini playbook.yml``
+5. Install application:
+   1. ``cd ../app``
+   2. ``helm upgrade --install --atomic --create-namespace --namespace flask-api -f flask-api/values.yaml flask-api flask-api``
 
 ## Overall design
 
@@ -51,10 +73,7 @@ In order to setup infrastructure in OCI using Terraform, you can use below docum
 After installing ``Terraform CLI`` and ``OCI CLI``, the first step was to authenticate in Oracle Cloud and save session in profile ``k8s-oci``:
 
 ```shell
-oci session authenticate
-.........
-Enter the name of the profile you would like to create: k8s-oci
-.........
+oci session authenticate --region eu-frankfurt-1 --profile-name k8s-oci
 ```
 
 Created session credentials can be checked by command:
