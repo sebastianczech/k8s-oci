@@ -22,23 +22,31 @@ For future there are plans to extend repository by adding:
 
 ## Quickstart
 
+In order to quickly provision and configure your free Kubernetes cluster, please follow below tasks:
+
+0. Register and activate account in [Oracle Cloud](https://cloud.oracle.com/)
 1. Install prerequisites on local machine:
    1. [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)
    2. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
    3. [Helm](https://helm.sh/docs/intro/install/)
+   4. [OCI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm)
 2. Clone repository:
    1. ``git clone https://github.com/sebastianczech/k8s-oci``
    2. ``cd k8s-oci``
-3. Provision infrastructure:
+3. Authenticate in Oracle Cloud:
+   1. ``oci session authenticate --region eu-frankfurt-1 --profile-name k8s-oci``
+4. Provision infrastructure:
    1. ``cd infra``
    2. ``terraform plan``
    3. ``terraform apply -auto-approve``
-4. Configure Kubernetes:
+5. Configure Kubernetes:
    1. ``cd ../conf``
    2. ``ansible-playbook -i ../infra/inventory.ini playbook.yml``
-5. Install application:
+6. Install application:
    1. ``cd ../app``
    2. ``helm upgrade --install --atomic --create-namespace --namespace flask-api -f flask-api/values.yaml flask-api flask-api``
+
+In order to get mode details, please read below desing and description of infrastructure and configuration.
 
 ## Overall design
 
