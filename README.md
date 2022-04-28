@@ -9,12 +9,12 @@ Repository contains set of prepared code to deploy free Kubernetes cluster in Or
 Moreover there were prepared:
 * Python application, which can be deployed in created K8s cluster
 * GitHub Actions to automate build process and push image to Docker Hub
-* Helm charts used to deploye application
+* Helm charts used to deploy application
 
 For future there are plans to extend repository by adding:
 * Extension to existing pipeline for application by adding:
-  * Automated tests in continuous integration
-  * Continuous deployment after finishing build and push image to Docker Hub
+  * Automated tests, before build in continuous integration stage
+  * Continuous deployment stage after finishing build and push image to Docker Hub
 * Add new GitHub Action to configure infrastructure
 * Integration of existing application with AWS services (Free Tier)
 * Alternative to Terraform code to configure infrastructure using Pulumi
@@ -96,7 +96,15 @@ Token can be later refreshed by command:
 oci session refresh --profile k8s-oci
 ```
 
-Whole infrastacture as a code was prepared in [infra](infra) directory.
+Whole infrastacture as a code was prepared in [infra](infra) directory and it was splitted into mutliple files:
+* [main file with provider](infra/main.tf)
+* [compute nodes](infra/compute.tf)
+* [network configuration (VCN, subnet, route table and Internet gateway)](infra/network.tf)
+* [load balancer](infra/load_balancer.tf)
+* [security (ingress rules)](infra/security.tf)
+* [generator of Ansible inventory](infra/inventory.tf)
+* [generator of scripts to connect via SSH](infra/ssh.tf)
+* [generator of Ansible variables](infra/vars.tf)
 
 At first Terraform needs to initialized:
 
@@ -140,7 +148,7 @@ After configuring all elements from overall design, in Terraform output you will
 terraform output
 ```
 
-Moreover there will be generated automatically:
+Moreover there will be generated automatically files:
 - ``inventory.ini`` - Ansible inventory from [template](infra/inventory.tmpl)
 - ``vars.yml`` - Ansible varialbes from [template](infra/vars.tmpl)
 - ``ssh_k8s_node0.sh``, ``ssh_k8s_node1.sh``, ``ssh_k8s_node2.sh``, ``ssh_k8s_node3.sh`` - scripts to connect to machines via ssh using [template](infra/ssh.tmpl)
