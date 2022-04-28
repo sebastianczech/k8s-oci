@@ -164,18 +164,19 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+General information about prepared Ansible role you can find in [role README.md](conf/conf-k8s-oracle-cloud/README.md). Role contains:
+* tasks to configure:
+  - [install required packages like ``Docker`` or ``microk8s``](conf/conf-k8s-oracle-cloud/tasks/install.yml)
+  - [configure ``iptables``](conf/conf-k8s-oracle-cloud/tasks/iptables.yml)
+  - [generate certificates used by ``microk8s``](conf/conf-k8s-oracle-cloud/tasks/microk8s_certs.yml)
+  - [configure ``microk8s`` cluster](conf/conf-k8s-oracle-cloud/tasks/microk8s_cluster.yml)
+
 To use Ansible role and prepared playbook from [conf](conf), you can execute command:
 
 ```
 cd conf
 ansible-playbook -i ../infra/inventory.ini playbook.yml
 ```
-
-Playbook is going to:
-- install required packages like ``Docker`` or ``microk8s``
-- configure ``iptables``
-- generate certificates used by ``microk8s``
-- configure ``microk8s`` cluster
 
 ## Application
 
