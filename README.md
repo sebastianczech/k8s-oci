@@ -120,8 +120,8 @@ terraform plan
 ```
 
 All variables defined in [variables.tf](infra/variables.tf) contain default values besides 2 variables:
-- ``compartment_id``
-- ``my_public_ip``
+* ``compartment_id``
+* ``my_public_ip``
 
 First value you can take from [Oracle Cloud web console](https://cloud.oracle.com/identity/compartments).
 My public IP address you can get using command:
@@ -149,9 +149,9 @@ terraform output
 ```
 
 Moreover there will be generated automatically files:
-- ``inventory.ini`` - Ansible inventory from [template](infra/inventory.tmpl)
-- ``vars.yml`` - Ansible varialbes from [template](infra/vars.tmpl)
-- ``ssh_k8s_node0.sh``, ``ssh_k8s_node1.sh``, ``ssh_k8s_node2.sh``, ``ssh_k8s_node3.sh`` - scripts to connect to machines via ssh using [template](infra/ssh.tmpl)
+* ``inventory.ini`` - Ansible inventory from [template](infra/inventory.tmpl)
+* ``vars.yml`` - Ansible varialbes from [template](infra/vars.tmpl)
+* ``ssh_k8s_node0.sh``, ``ssh_k8s_node1.sh``, ``ssh_k8s_node2.sh``, ``ssh_k8s_node3.sh`` - scripts to connect to machines via ssh using [template](infra/ssh.tmpl)
 
 ## Configuration
 
@@ -165,11 +165,10 @@ pip install -r requirements.txt
 ```
 
 General information about prepared Ansible role you can find in [role README.md](conf/conf-k8s-oracle-cloud/README.md). Role contains:
-* tasks to configure:
-  - [install required packages like ``Docker`` or ``microk8s``](conf/conf-k8s-oracle-cloud/tasks/install.yml)
-  - [configure ``iptables``](conf/conf-k8s-oracle-cloud/tasks/iptables.yml)
-  - [generate certificates used by ``microk8s``](conf/conf-k8s-oracle-cloud/tasks/microk8s_certs.yml)
-  - [configure ``microk8s`` cluster](conf/conf-k8s-oracle-cloud/tasks/microk8s_cluster.yml)
+* [install required packages like ``Docker`` or ``microk8s``](conf/conf-k8s-oracle-cloud/tasks/install.yml)
+* [configure ``iptables``](conf/conf-k8s-oracle-cloud/tasks/iptables.yml)
+* [generate certificates used by ``microk8s``](conf/conf-k8s-oracle-cloud/tasks/microk8s_certs.yml)
+* [configure ``microk8s`` cluster](conf/conf-k8s-oracle-cloud/tasks/microk8s_cluster.yml)
 
 To use Ansible role and prepared playbook from [conf](conf), you can execute command:
 
