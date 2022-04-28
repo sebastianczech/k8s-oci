@@ -178,6 +178,18 @@ cd conf
 ansible-playbook -i ../infra/inventory.ini playbook.yml
 ```
 
+In order to access configured microk8s cluster, use command:
+
+```
+export KUBECONFIG=$KUBECONFIG:~/.kube/config:~/.kube/microk8s.conf
+```
+
+You can then check, if it's working, using command:
+
+```
+kubectl get all --all-namespaces
+```
+
 ## Application
 
 ### Continuous integration
@@ -252,6 +264,8 @@ export NODE_PORT=$(kubectl get --namespace flask-api -o jsonpath="{.spec.ports[0
 export NODE_IP=$(kubectl get nodes --namespace flask-api -o jsonpath="{.items[0].status.addresses[0].address}")
 echo http://$NODE_IP:$NODE_PORT
 ```
+
+You can also used public IP for load balancer to access application from Internet.
 
 Installed application can be checked by commands:
 
