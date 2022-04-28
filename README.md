@@ -260,12 +260,12 @@ helm upgrade --install --atomic \
 Get the application URL by running these commands on one of the Kubernetes nodes:
 
 ```
+mkdir ~/.kube
+microk8s config > ~/.kube/config
 export NODE_PORT=$(kubectl get --namespace flask-api -o jsonpath="{.spec.ports[0].nodePort}" services flask-api-chart)
 export NODE_IP=$(kubectl get nodes --namespace flask-api -o jsonpath="{.items[0].status.addresses[0].address}")
-echo http://$NODE_IP:$NODE_PORT
+curl http://$NODE_IP:$NODE_PORT
 ```
-
-You can also used public IP for load balancer to access application from Internet.
 
 Installed application can be checked by commands:
 
@@ -288,4 +288,13 @@ helm uninstall --namespace flask-api flask-api
 
 ### Use app from Internet
 
-In order to access app from Internet, NGINX controller was configured by [Ansible playbook](conf/conf-k8s-oracle-cloud/tasks/microk8s_ingress.yml) and [Helm chart](app/flask-api/values.yaml) was adjusted.
+In order to access app from Internet:
+* NGINX controller was configured by [Ansible playbook](conf/conf-k8s-oracle-cloud/tasks/microk8s_ingress.yml)
+* [Helm chart](app/flask-api/values.yaml) was adjusted by enabling ingress
+
+Using that configuration, which is already in prepare Ansible and Helm configuration, you can use public IP for load balancer to access application from Internet:
+
+```
+export LB_PUBLIC_IP=`terraform output | grep lb_public_ip | awk -F\" '{print $2}'`
+curl http://$LB_PUBLIC_IP
+```
