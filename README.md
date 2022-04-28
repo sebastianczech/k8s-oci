@@ -164,7 +164,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Whole configuration as a code was prepared in Ansible role, for which you can find more details in in [role README.md](conf/conf-k8s-oracle-cloud/README.md). Role ``conf-k8s-oracle-cloud`` contains tasks to:
+Whole configuration as a code was prepared in Ansible role, for which you can find more details in [role README.md](conf/conf-k8s-oracle-cloud/README.md). Role ``conf-k8s-oracle-cloud`` contains tasks to:
 * [install required packages like ``Docker`` or ``microk8s``](conf/conf-k8s-oracle-cloud/tasks/install.yml)
 * [configure ``iptables``](conf/conf-k8s-oracle-cloud/tasks/iptables.yml)
 * [generate certificates used by ``microk8s``](conf/conf-k8s-oracle-cloud/tasks/microk8s_certs.yml)
