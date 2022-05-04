@@ -1,6 +1,6 @@
 ---
 - name: Refresh certificates
-  command: microk8s refresh-certs
+  command: microk8s refresh-certs --cert ca.crt --cert server.crt --cert front-proxy-client.crt
   become: true
 - name: Reboot host
   reboot:
