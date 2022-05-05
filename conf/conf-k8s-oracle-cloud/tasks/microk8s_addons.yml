@@ -1,0 +1,21 @@
+---
+- name: Configure addons
+  block:
+  - name: Get status of all microk8s addons
+    command: microk8s status --format short
+    register: addons_status
+    changed_when: False
+  - name: Enable NGINX ingress controller
+    command: microk8s enable ingress
+    when: '"ingress: enabled" not in addons_status.stdout'
+  - name: Enable storage
+    command: microk8s enable storage
+    when: '"storage: enabled" not in addons_status.stdout'
+  - name: Enable DNS
+    command: microk8s enable dns
+    when: '"dns: enabled" not in addons_status.stdout'
+  - name: Enable K8s metrics server
+    command: microk8s enable metrics-server
+    when: '"metrics-server: enabled" not in addons_status.stdout'
+  when: 'inventory_hostname == "k8s_node0"'
+  become: true

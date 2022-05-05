@@ -50,3 +50,5 @@ conf/venv
 # App env
 
 app/venv
+
+test
