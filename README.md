@@ -153,6 +153,13 @@ Moreover there will be generated automatically files:
 * ``vars.yml`` - Ansible varialbes from [template](infra/vars.tmpl)
 * ``ssh_k8s_node0.sh``, ``ssh_k8s_node1.sh``, ``ssh_k8s_node2.sh``, ``ssh_k8s_node3.sh`` - scripts to connect to machines via ssh using [template](infra/ssh.tmpl)
 
+If you are interested in more details e.g. module use to provision infrastructure for K8s cluster, you can use command:
+
+```
+terraform console
+module.k8s_oracl_cloud
+```
+
 ## Configuration
 
 Terraform is great for infrastrcture, but for configuration Ansible was used. Using below commands you can install Ansible via pip:
