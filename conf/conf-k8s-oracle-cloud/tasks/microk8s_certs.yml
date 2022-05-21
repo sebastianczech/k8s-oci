@@ -43,6 +43,12 @@
       name: ubuntu
       groups: microk8s
       append: yes
+  - name: Wait for snap to finish changes in progress
+    command: snap changes
+    register: snap_changes
+    until: snap_changes.stdout.find("Doing") == -1
+    retries: 6
+    delay: 10
   - name: Flush handlers
     meta: flush_handlers
   become: true
