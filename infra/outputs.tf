@@ -47,3 +47,21 @@ output "lb_public_ip" {
   description = "public IPs of LB"
   value       = module.k8s_oracl_cloud.lb_public_ip
 }
+
+# output "oci_users" {
+#   description = "OCI users"
+#   # value       = data.oci_identity_users.oci_users.users
+#   value       = {
+#     name = data.oci_identity_users.oci_users.users.*.name
+#     email = data.oci_identity_users.oci_users.users.*.email
+#     state = data.oci_identity_users.oci_users.users.*.state
+#   }
+# }
+
+# output "compute_node_images" {
+#   description = "OCI compute node images"
+#   # value = data.oci_core_images.oci_compute_node_images.images
+#   value       = {
+#     name = data.oci_core_images.oci_compute_node_images.images.*.display_name
+#   }
+# }
