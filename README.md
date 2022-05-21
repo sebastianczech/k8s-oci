@@ -46,6 +46,8 @@ In order to quickly provision and configure your free Kubernetes cluster, please
    1. ``cd ../app``
    2. ``helm upgrade --install --atomic --create-namespace --namespace flask-api -f flask-api/values.yaml flask-api flask-api``
 
+Instead of steps 3-6, you can also use simple command: ``./run.sh``.
+
 In order to get mode details, please read below desing and description of infrastructure and configuration.
 
 ## Overall design
