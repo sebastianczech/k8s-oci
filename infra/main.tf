@@ -1,4 +1,12 @@
 terraform {
+  cloud {
+    organization = "sebastianczech"
+
+    workspaces {
+      name = "k8s-oci"
+    }
+  }
+
   required_providers {
     oci = {
       source = "hashicorp/oci"
