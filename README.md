@@ -162,6 +162,8 @@ terraform console
 module.k8s_oracl_cloud
 ```
 
+Terraform module to provision infrastructure to setup Kubernets cluster was published not only on GitHub as part of that repository, but also in [Terraform Registry](https://registry.terraform.io/modules/sebastianczech/infra-k8s-oracle-cloud/oci/latest).
+
 ## Configuration
 
 Terraform is great for infrastrcture, but for configuration Ansible was used. Using below commands you can install Ansible via pip:
