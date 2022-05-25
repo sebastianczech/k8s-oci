@@ -13,7 +13,8 @@ resource "oci_core_instance" "k8s_node" {
         subnet_id = oci_core_subnet.k8s_subnet.id
     }
     metadata = {
-        ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
+        # ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
+        ssh_authorized_keys = var.SSH_AUTH_KEY
     }
     shape_config {
         baseline_ocpu_utilization = "BASELINE_1_1"
