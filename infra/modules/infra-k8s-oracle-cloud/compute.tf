@@ -14,7 +14,7 @@ resource "oci_core_instance" "k8s_node" {
     }
     metadata = {
         # ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
-        ssh_authorized_keys = var.SSH_AUTH_KEY
+        ssh_authorized_keys = var.ssh_authorized_keys
     }
     shape_config {
         baseline_ocpu_utilization = "BASELINE_1_1"
