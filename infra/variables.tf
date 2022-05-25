@@ -8,6 +8,11 @@ variable "my_public_ip" {
   type        = string
 }
 
+variable "ssh_authorized_keys" {
+  description = "public SSH key"
+  type        = string
+}
+
 variable "profile_name" {
   description = "OCI profile name"
   type        = string

@@ -10,6 +10,7 @@ variable "my_public_ip" {
 
 variable "ssh_authorized_keys" {
   description = "public SSH key"
+  type        = string
 }
 
 variable "vcn_cidr_block" {

@@ -33,4 +33,5 @@ module "k8s_oracl_cloud" {
 
   compartment_id = var.compartment_id
   my_public_ip = var.my_public_ip
+  ssh_authorized_keys = var.ssh_authorized_keys
 }
