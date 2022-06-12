@@ -121,9 +121,10 @@ Then changes to be provisioned can be checked using:
 terraform plan
 ```
 
-All variables defined in [variables.tf](infra/variables.tf) contain default values besides 2 variables:
+All variables defined in [variables.tf](infra/variables.tf) contain default values besides 3 variables:
 * ``compartment_id``
 * ``my_public_ip``
+* ``id_rsa_pub``
 
 First value you can take from [Oracle Cloud web console](https://cloud.oracle.com/identity/compartments).
 My public IP address you can get using command:
@@ -131,6 +132,8 @@ My public IP address you can get using command:
 ```
 echo "my_public_ip = \"`curl -s ifconfig.co`/32\"" 2> /dev/null 1>> terraform.tfvars
 ```
+
+Last input, public SSH key, you can get e.g. from file ``~/.ssh/id_rsa.pub"`` on local machine or generate new keys for SSH, if you don't have it.
 
 At the end whole configuration can be provisioned by command:
 
