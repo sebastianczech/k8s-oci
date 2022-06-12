@@ -8,6 +8,11 @@ variable "my_public_ip" {
   type        = string
 }
 
+variable "id_rsa_pub" {
+  description = "SSH public key"
+  type        = string
+}
+
 variable "profile_name" {
   description = "OCI profile name"
   type        = string

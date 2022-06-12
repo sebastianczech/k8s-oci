@@ -25,4 +25,5 @@ module "k8s_oracl_cloud" {
 
   compartment_id = var.compartment_id
   my_public_ip = var.my_public_ip
+  id_rsa_pub = var.id_rsa_pub
 }
