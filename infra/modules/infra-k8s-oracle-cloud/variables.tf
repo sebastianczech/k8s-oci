@@ -43,3 +43,13 @@ variable "instance_count" {
   type        = number
   default     = 4
 }
+
+variable "egress_security_rules" {
+  type    = list(map(string))
+  default = []
+}
+
+variable "ingress_security_rules" {
+  type    = list(map(string))
+  default = []
+}
