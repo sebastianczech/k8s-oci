@@ -14,44 +14,34 @@ resource "oci_core_default_security_list" "k8s_vcn_security_list" {
     source_type = "CIDR_BLOCK"
     description = "Allow my public IP for all protocols"
   }
-  ingress_security_rules {
-    protocol    = 6
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    description = "Allow all for SSH"
-    tcp_options {
-      max = 22
-      min = 22
+  dynamic "ingress_security_rules" {
+    for_each = {
+      for k, v in var.ingress_security_rules : k => v
+      if v["protocol"] == "6"
+    }
+    iterator = security_rule
+    content {
+      protocol    = security_rule.value["protocol"]
+      source      = security_rule.value["source"]
+      source_type = security_rule.value["source_type"]
+      description = security_rule.value["description"]
+      tcp_options {
+        max = security_rule.value["port"]
+        min = security_rule.value["port"]
+      }
     }
   }
-  ingress_security_rules {
-    protocol    = 6
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    description = "Allow all for HTTP"
-    tcp_options {
-      max = 80
-      min = 80
+  dynamic "ingress_security_rules" {
+    for_each = {
+      for k, v in var.ingress_security_rules : k => v
+      if v["protocol"] == "1"
     }
-  }
-  ingress_security_rules {
-    protocol    = 6
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    description = "Allow all for HTTPS"
-    tcp_options {
-      max = 443
-      min = 443
-    }
-  }
-  ingress_security_rules {
-    protocol    = 1
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    description = "Allow all for ICMP"
-    icmp_options {
-      type = 3
-      code = 4
+    iterator = security_rule
+    content {
+      protocol    = security_rule.value["protocol"]
+      source      = security_rule.value["source"]
+      source_type = security_rule.value["source_type"]
+      description = security_rule.value["description"]
     }
   }
   ingress_security_rules {
