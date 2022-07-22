@@ -12,12 +12,6 @@ resource "oci_core_default_security_list" "k8s_vcn_security_list" {
       description      = security_rule.value["description"]
     }
   }
-  ingress_security_rules {
-    protocol    = "all"
-    source      = var.my_public_ip
-    source_type = "CIDR_BLOCK"
-    description = "Allow my public IP for all protocols"
-  }
   dynamic "ingress_security_rules" {
     for_each = {
       for k, v in var.ingress_security_rules : k => v
@@ -47,6 +41,12 @@ resource "oci_core_default_security_list" "k8s_vcn_security_list" {
       source_type = security_rule.value["source_type"]
       description = security_rule.value["description"]
     }
+  }
+  ingress_security_rules {
+    protocol    = "all"
+    source      = var.my_public_ip
+    source_type = "CIDR_BLOCK"
+    description = "Allow my public IP for all protocols"
   }
   ingress_security_rules {
     protocol    = 1
