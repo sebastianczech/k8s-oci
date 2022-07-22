@@ -2,11 +2,15 @@ resource "oci_core_default_security_list" "k8s_vcn_security_list" {
   manage_default_resource_id = oci_core_vcn.k8s_vcn.default_security_list_id
   compartment_id             = var.compartment_id
   display_name               = "K8s security list"
-  egress_security_rules {
-    destination      = "0.0.0.0/0"
-    protocol         = "all"
-    destination_type = "CIDR_BLOCK"
-    description      = "Allow all outgoing traffic"
+  dynamic "egress_security_rules" {
+    for_each = var.egress_security_rules
+    iterator = security_rule
+    content {
+      protocol         = security_rule.value["protocol"]
+      destination      = security_rule.value["destination"]
+      destination_type = security_rule.value["destination_type"]
+      description      = security_rule.value["description"]
+    }
   }
   ingress_security_rules {
     protocol    = "all"
