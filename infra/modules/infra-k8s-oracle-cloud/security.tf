@@ -14,8 +14,7 @@ resource "oci_core_default_security_list" "k8s_vcn_security_list" {
   }
   dynamic "ingress_security_rules" {
     for_each = {
-      for k, v in var.ingress_security_rules : k => v
-      if v["protocol"] == "6"
+      for k, v in var.ingress_security_rules : k => v if v["protocol"] == "6"
     }
     iterator = security_rule
     content {
@@ -31,8 +30,7 @@ resource "oci_core_default_security_list" "k8s_vcn_security_list" {
   }
   dynamic "ingress_security_rules" {
     for_each = {
-      for k, v in var.ingress_security_rules : k => v
-      if v["protocol"] == "1"
+      for k, v in var.ingress_security_rules : k => v if v["protocol"] == "1"
     }
     iterator = security_rule
     content {
