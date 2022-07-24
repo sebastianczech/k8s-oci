@@ -48,6 +48,11 @@ output "lb_public_ip" {
   value       = module.k8s_oracl_cloud.lb_public_ip
 }
 
+output "oci_ubuntu_images" {
+  description = "list of possible Ubuntu images"
+  value       = module.k8s_oracl_cloud.oci_ubuntu_images
+}
+
 # output "oci_users" {
 #   description = "OCI users"
 #   # value       = data.oci_identity_users.oci_users.users

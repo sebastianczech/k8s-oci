@@ -1,5 +1,6 @@
 locals {
   number_of_availability_domains = length(data.oci_identity_availability_domains.ads.availability_domains)
+  instance_image = data.oci_core_images.oci_ubuntu_images.images[0].id
 }
 
 resource "oci_core_instance" "k8s_node" {
@@ -8,7 +9,7 @@ resource "oci_core_instance" "k8s_node" {
   compartment_id      = var.compartment_id
   shape               = var.instance_shape
   source_details {
-    source_id   = var.instance_image
+    source_id   = local.instance_image
     source_type = "image"
   }
   display_name = "k8s_node${count.index}"
@@ -26,4 +27,27 @@ resource "oci_core_instance" "k8s_node" {
     ocpus                     = 1
   }
   preserve_boot_volume = false
+}
+
+data "oci_core_images" "oci_ubuntu_images" {
+  compartment_id = var.compartment_id
+  sort_by        = "TIMECREATED"
+  sort_order     = "DESC"
+
+  filter {
+    name   = "operating_system"
+    values = ["Canonical Ubuntu"]
+  }
+
+  filter {
+    name   = "operating_system_version"
+    values = ["20.04"]
+  }
+
+  filter {
+    name   = "display_name"
+    values = [".*aarch64.*"]
+    regex  = true
+  }
+
 }
